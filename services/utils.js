@@ -11,7 +11,7 @@ exports.generateUniqueCode = function(){
 }
 
 function generateFiveDigitCode() {
-    return Math.floor(Math.random() * 99999) + 10000;
+    return Math.floor(Math.random() * 89999) + 10000;
 }
 
 exports.calculateWinner =  function(scores) {
