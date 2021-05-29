@@ -13,6 +13,7 @@ exports.addRoom = function(roomCode, roomSettings) {
     rooms[roomCode].counter = 0;
     rooms[roomCode].questionStatus = new Array(roomSettings.number).fill(false);
     rooms[roomCode].scores = {};
+    rooms[roomCode].players = [];
 }
 
 exports.checkPossibilityToJoin = function(roomCode) {
