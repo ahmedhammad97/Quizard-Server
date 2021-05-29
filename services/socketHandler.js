@@ -6,7 +6,12 @@ const questionHandler = require(__dirname + '/questionHandler');
 exports.socketConnection = function(server){
 
   //Socket.io main function
-  const io = socket(server);
+  const io = socket(server, {
+    cors: {
+      origin: "*",
+      methods: ["GET", "POST"]
+    }
+  });
 
   io.on('connection', socket => {
     console.log(`Socket ${socket.id} joined`);
@@ -25,10 +30,12 @@ exports.socketConnection = function(server){
         if (playerCounter > 4 || playerCounter < 1) {
             socket.emit('gameStartFailed');
         }
-        // Generate Questions
-        let gameSettings = roomHandler.getGameSettings(roomCode);
-        let questions = questionHandler.generateQuestions(gameSettings);
-        io.sockets.to(data.roomCode).emit('questions', questions);
+        else {
+            // Generate Questions
+            let gameSettings = roomHandler.getGameSettings(data.roomCode);
+            let questions = questionHandler.generateQuestions(gameSettings);
+            io.sockets.to(data.roomCode).emit('questions', questions);
+        }
     });
 
     socket.on('correctAnswer', data => {
