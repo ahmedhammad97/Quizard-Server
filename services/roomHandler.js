@@ -28,6 +28,12 @@ exports.addPlayer = function(playerId, name, roomCode) {
     rooms[roomCode].counter++;
 }
 
+exports.removePlayer = function(playerId, roomCode) {
+    delete rooms[roomCode].players[playerId];
+    rooms[roomCode].counter--;
+    if (rooms[roomCode].counter === 0) delete rooms[roomCode];
+}
+
 exports.getRoomCounter = function(roomCode) {
     return rooms[roomCode].counter;
 }

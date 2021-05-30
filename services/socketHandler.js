@@ -56,5 +56,9 @@ exports.socketConnection = function(server){
             roomHandler.setOwner(data.roomCode, winner);
         }
     });
+
+    socket.on('disconnect', data => {
+        roomHandler.removePlayer(socket.id, data.roomCode);
+    });
   });
 };
