@@ -4,7 +4,6 @@ const utils = require(__dirname + '/services/utils');
 const roomHandler = require(__dirname + '/services/roomHandler');
 
 var jsonParser = bodyParser.json()
-var urlencodedParser = bodyParser.urlencoded({ extended: false });
 
 //Home page
 router.get('/', (req, res)=>{
@@ -16,11 +15,12 @@ router.post('/create', jsonParser, (req, res)=>{
     let code = utils.generateUniqueCode();
     let roomSettings = req.body.settings;
     roomHandler.addRoom(code, roomSettings);
+    console.log(`Created room ${code}`);
     res.send({'code': code});
 });
 
 //Request access to room by code
-router.post('/join', urlencodedParser, (req, res)=>{
+router.post('/join', jsonParser, (req, res)=>{
     let code = req.body.roomCode;
     res.send(roomHandler.checkPossibilityToJoin(code));
 });
