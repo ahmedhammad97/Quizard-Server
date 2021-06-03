@@ -58,7 +58,7 @@ exports.socketConnection = function(server){
     });
 
     socket.on('disconnect', data => {
-        roomHandler.removePlayer(socket.id, data.roomCode);
+        console.log(`Socket ${socket.id} disconnected`);
     });
   });
 };
