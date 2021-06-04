@@ -27,7 +27,7 @@ exports.socketConnection = function(server){
 
     socket.on('startGame', data => {
         let playerCounter = roomHandler.getRoomCounter(data.roomCode);
-        if (playerCounter > 4 || playerCounter < 1) {
+        if (playerCounter > 4 || playerCounter < 2) {
             socket.emit('gameStartFailed');
         }
         else {
