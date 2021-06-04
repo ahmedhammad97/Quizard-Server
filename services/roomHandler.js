@@ -18,12 +18,12 @@ exports.addRoom = function(roomCode, roomSettings) {
 
 exports.checkPossibilityToJoin = function(roomCode) {
     if (!rooms.hasOwnProperty(roomCode)) return {'status': false, 'message': 'Room does not exist'};
-    if (rooms[roomCode].counter > 4) return {'status': false, 'message': 'Room Full'};
+    if (rooms[roomCode].counter > 3) return {'status': false, 'message': 'Room Full'};
     return {'status': true};
 }
 
 exports.addPlayer = function(playerId, name, roomCode) {
-    rooms[roomCode].players.push({playerId: name});
+    rooms[roomCode].players.push({[playerId]: name});
     if (rooms[roomCode].counter === 0) rooms[roomCode].owner = playerId;
     rooms[roomCode].counter++;
 }
