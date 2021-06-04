@@ -21,7 +21,7 @@ exports.socketConnection = function(server){
         socket.join(data.roomCode);
         roomHandler.addPlayer(socket.id, data.name, data.roomCode);
         let playerCounter = roomHandler.getRoomCounter(data.roomCode);
-        io.sockets.to(data.roomCode).emit('playerCounter', playerCounter);
+        io.to(data.roomCode).emit('playerCounter', playerCounter);
     });
 
 
@@ -34,7 +34,7 @@ exports.socketConnection = function(server){
             // Generate Questions
             let gameSettings = roomHandler.getGameSettings(data.roomCode);
             let questions = questionHandler.generateQuestions(gameSettings);
-            io.sockets.to(data.roomCode).emit('questions', questions);
+            io.to(data.roomCode).emit('questions', questions);
         }
     });
 
@@ -52,7 +52,7 @@ exports.socketConnection = function(server){
         if (playerCounter === submittedScores) {
             let winner = utils.calculateWinner(submittedScores);
             let winnerName = roomHandler.getPlayerName(data.roomCode, winner);
-            io.sockets.to(data.roomCode).emit('winner', winnerName);
+            io.to(data.roomCode).emit('winner', winnerName);
             roomHandler.setOwner(data.roomCode, winner);
         }
     });
