@@ -34,7 +34,7 @@ exports.socketConnection = function(server){
             // Generate Questions
             let gameSettings = roomHandler.getGameSettings(data.roomCode);
             let questions = questionHandler.generateQuestions(gameSettings);
-            io.to(data.roomCode).emit('questions', questions);
+            io.to(data.roomCode).emit('questions', {'questions': questions, 'settings': gameSettings});
         }
     });
 
