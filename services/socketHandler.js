@@ -40,9 +40,10 @@ exports.socketConnection = function(server){
 
     socket.on('correctAnswer', data => {
         // Check if first
-        if (roomHandler.isFirstAnswer(data.roomCode, data.questionIndex))
+        if (roomHandler.isFirstAnswer(data.roomCode, data.questionIndex)) {
             socket.emit('pointConfirmed');
-        else socket.emit('pointDenied');
+            io.to(data.roomCode).emit('nextQuestions', data.questionIndex+1);
+        }
     });
 
     socket.on('finalScore', data => {
