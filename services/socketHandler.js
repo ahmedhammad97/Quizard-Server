@@ -39,18 +39,16 @@ exports.socketConnection = function(server){
     });
 
     socket.on('correctAnswer', data => {
-        // Check if first
-        if (roomHandler.isFirstAnswer(data.roomCode, data.questionIndex)) {
+        if (roomHandler.isFirstAnswer(data.roomCode, data.questionIndex))
             socket.emit('pointConfirmed');
-            io.to(data.roomCode).emit('nextQuestions', data.questionIndex+1);
-        }
     });
 
     socket.on('finalScore', data => {
-        roomHandler.submitScore(socket.id, data.score);
+        roomHandler.submitScore(socket.id, data.score, data.roomCode);
         let playerCounter = roomHandler.getRoomCounter(data.roomCode);
-        let submittedScores = roomHandler.getSubmittedScores(data.roomCode).size();
-        if (playerCounter === submittedScores) {
+        let submittedScores = roomHandler.getSubmittedScores(data.roomCode);
+        let submittedScoresCount = Object.keys(submittedScores).length;
+        if (playerCounter === submittedScoresCount) {
             let winner = utils.calculateWinner(submittedScores);
             let winnerName = roomHandler.getPlayerName(data.roomCode, winner);
             io.to(data.roomCode).emit('winner', winnerName);

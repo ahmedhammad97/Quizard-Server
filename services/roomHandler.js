@@ -13,7 +13,7 @@ exports.addRoom = function(roomCode, roomSettings) {
     rooms[roomCode].counter = 0;
     rooms[roomCode].questionStatus = new Array(roomSettings.number).fill(false);
     rooms[roomCode].scores = {};
-    rooms[roomCode].players = [];
+    rooms[roomCode].players = {};
 }
 
 exports.checkPossibilityToJoin = function(roomCode) {
@@ -23,7 +23,7 @@ exports.checkPossibilityToJoin = function(roomCode) {
 }
 
 exports.addPlayer = function(playerId, name, roomCode) {
-    rooms[roomCode].players.push({[playerId]: name});
+    rooms[roomCode].players[playerId] = name;
     if (rooms[roomCode].counter === 0) rooms[roomCode].owner = playerId;
     rooms[roomCode].counter++;
 }
@@ -52,7 +52,7 @@ exports.isFirstAnswer = function(roomCode, questionIndex) {
     else return false;
 }
 
-exports.submitScore = function(playerId, score) {
+exports.submitScore = function(playerId, score, roomCode) {
     rooms[roomCode].scores[playerId] = score;
 }
 
